@@ -1,0 +1,19 @@
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: gogs-triggerbinding
+spec:
+  params:
+  - name: gitrevision
+    value: $(body.after)
+  - name: gitshortsha
+    value: $(extensions.intercepted.short_sha)
+  - name: gitbranchname
+    value: $(body.branch_name)
+  - name: gitrepositoryurl
+    value: $(body.repository.clone_url)
+  - name: contenttype
+    value: $(header.Content-Type)

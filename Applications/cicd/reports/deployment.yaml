@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  labels:
+    app: reports-repo
+    app.kubernetes.io/instance: reports-repo
+    app.kubernetes.io/name: reports-repo
+    app.kubernetes.io/part-of: reports-repo
+  name: reports-repo
+  namespace: cicd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reports-repo
+      deployment: reports-repo
+  template:
+    metadata:
+      labels:
+        app: reports-repo
+        deployment: reports-repo
+    spec:
+      containers:
+      - name: uploader
+        resources:
+          limits:
+            memory: 4Gi
+            cpu: 2
+          requests:
+            memory: 512Mi
+            cpu: 200m
+        image: quay.io/chmouel/go-simple-uploader:latest
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: UPLOADER_PORT
+            value: "9000"
+          - name: UPLOADER_DIRECTORY
+            value: "/fileuploads"
+        volumeMounts:
+        - mountPath: /fileuploads
+          name: staticfiles
+      - image: quay.io/siamaksade/nginx:latest
+        resources:
+          limits:
+            memory: 4Gi
+            cpu: 2
+          requests:
+            memory: 512Mi
+            cpu: 200m
+        name: nginx
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d/
+          name: nginx-conf
+        - mountPath: /fileuploads
+          name: staticfiles
+      volumes:
+      - name: nginx-conf
+        configMap:
+          defaultMode: 420
+          name: reports-repo-nginx-conf
+      - name: nexus-data
+        persistentVolumeClaim:
+          claimName: nexus-pv
+      - name: staticfiles
+        persistentVolumeClaim:
+          claimName: reports-repo-pv

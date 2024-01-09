@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  generateName: petclinic-deploy-stage-
+spec:
+  pipelineRef:
+    name: petclinic-deploy-stage
+  workspaces:
+  - name: workspace
+    persistentVolumeClaim:
+      claimName: petclinic-stage-workspace

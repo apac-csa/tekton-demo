@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  labels:
+    kubernetes.io/metadata.name: cicd
+    argocd.argoproj.io/managed-by: openshift-gitops
+  name: cicd
+spec:
+  finalizers:
+  - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitea
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: cicd
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: Applications/cicd/gitea
+    repoURL: >-
+      https://github.com/nreilly-rhn/tekton-demo.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nexus
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: cicd
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: Applications/cicd/nexus
+    repoURL: >-
+      https://github.com/nreilly-rhn/tekton-demo.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: reports
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: cicd
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: Applications/cicd/reports
+    repoURL: >-
+      https://github.com/nreilly-rhn/tekton-demo.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarqube
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: cicd
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: Applications/cicd/sonarqube
+    repoURL: >-
+      https://github.com/nreilly-rhn/tekton-demo.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

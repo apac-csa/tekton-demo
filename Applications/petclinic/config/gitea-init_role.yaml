@@ -1,0 +1,44 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  name: gitea-init-cluster-role
+  namespace: cicd
+rules:
+  - verbs:
+      - '*'
+    apiGroups:
+      - console.openshift.io
+    resources:
+      - consolelinks
+  - verbs:
+      - get
+      - list
+      - watch
+    apiGroups:
+      - pfe.rhpds.com
+    resources:
+      - gitea
+  - verbs:
+      - get
+      - list
+      - watch
+    apiGroups:
+      - route.openshift.io
+    resources:
+      - routes
+  - verbs:
+      - get
+      - list
+      - watch
+    apiGroups:
+      - ''
+    resources:
+      - services
+  - verbs:
+      - '*'
+    apiGroups:
+      - operators.coreos.com
+    resources:
+      - '*'
