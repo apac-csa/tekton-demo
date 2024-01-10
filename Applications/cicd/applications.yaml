@@ -24,7 +24,7 @@ spec:
   source:
     path: Applications/cicd/gitea
     repoURL: >-
-      https://github.com/nreilly-rhn/tekton-demo.git
+      https://github.com/apac-csa/tekton-demo.git
     targetRevision: main
   syncPolicy:
     automated:
@@ -46,7 +46,7 @@ spec:
   source:
     path: Applications/cicd/nexus
     repoURL: >-
-      https://github.com/nreilly-rhn/tekton-demo.git
+      https://github.com/apac-csa/tekton-demo.git
     targetRevision: main
   syncPolicy:
     automated:
@@ -68,7 +68,7 @@ spec:
   source:
     path: Applications/cicd/reports
     repoURL: >-
-      https://github.com/nreilly-rhn/tekton-demo.git
+      https://github.com/apac-csa/tekton-demo.git
     targetRevision: main
   syncPolicy:
     automated:
@@ -90,7 +90,7 @@ spec:
   source:
     path: Applications/cicd/sonarqube
     repoURL: >-
-      https://github.com/nreilly-rhn/tekton-demo.git
+      https://github.com/apac-csa/tekton-demo.git
     targetRevision: main
   syncPolicy:
     automated:

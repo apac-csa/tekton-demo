@@ -12,7 +12,7 @@ spec:
   source:
     path: Operators/gitea/init
     repoURL: >-
-      https://github.com/nreilly-rhn/tekton-demo.git
+      https://github.com/apac-csa/tekton-demo.git
     targetRevision: main
   syncPolicy:
     automated:
@@ -34,7 +34,7 @@ spec:
   source:
     path: Operators/openshift-pipelines/init
     repoURL: >-
-      https://github.com/nreilly-rhn/tekton-demo.git
+      https://github.com/apac-csa/tekton-demo.git
     targetRevision: main
   syncPolicy:
     automated:
@@ -56,7 +56,7 @@ spec:
   source:
     path: Operators/nexus/init
     repoURL: >-
-      https://github.com/nreilly-rhn/tekton-demo.git
+      https://github.com/apac-csa/tekton-demo.git
     targetRevision: main
   syncPolicy:
     automated:
